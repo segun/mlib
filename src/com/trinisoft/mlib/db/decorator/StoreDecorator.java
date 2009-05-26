@@ -36,8 +36,12 @@ public class StoreDecorator extends BaseStoreAdapter {
         return -1;
     }
 
-    public boolean update(byte[] newData) {
+    public boolean update(RecordStore rs, byte[] newData, int recordID) {
         return true;
     }
 
+    public boolean delete(RecordStore rs, int recordID) {
+        return true;
+    }
+    
 }

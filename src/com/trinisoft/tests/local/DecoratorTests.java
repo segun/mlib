@@ -12,8 +12,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import javax.microedition.midlet.*;
-import javax.microedition.rms.RecordComparator;
-import javax.microedition.rms.RecordFilter;
 import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
 
@@ -56,15 +54,15 @@ class Testing extends BaseStore {
         return data;
     }
 
-    public boolean get(RecordComparator rc, RecordFilter rf) {
-        return true;
-    }
-
     public int save(RecordStore rs) throws IOException, RecordStoreException {
         return 1;
     }
 
-    public boolean update(byte[] newData) {
+    public boolean update(RecordStore rs, byte[] newData, int recordID) {
+        return true;
+    }
+
+    public boolean delete(RecordStore rs, int recordID) {
         return true;
     }
 }
