@@ -30,18 +30,22 @@ public class StoreDecorator extends BaseStoreAdapter {
             int id = rs.addRecord(data, 0, data.length);
             System.out.println("ID: " + id);
             return id;
-        } else {
-            System.out.println("class save no return true " + data);
+        } else {            
         }
         return -1;
     }
 
-    public boolean update(RecordStore rs, byte[] newData, int recordID) {
+    public boolean delete(RecordStore rs, int recordID) throws RecordStoreException {
+        baseStore.delete(rs, recordID);
+        rs.deleteRecord(recordID);
         return true;
     }
 
-    public boolean delete(RecordStore rs, int recordID) {
+    public boolean update(RecordStore rs, byte[] newData, int recordID) throws RecordStoreException {
+        baseStore.update(rs, newData, recordID);
+        rs.setRecord(recordID, newData, 0, newData.length);
         return true;
     }
+
     
 }

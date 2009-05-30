@@ -22,6 +22,7 @@ public class Menus {
     Font largeFont = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_BOLD, Font.SIZE_LARGE);
     Font defaultFont = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_LARGE);
     Display display;
+
     /**
      *
      * @param menus
@@ -102,20 +103,21 @@ public class Menus {
         public void highlight(Graphics g, int index) {
             try {
                 this.removeCommand(canvasCommand);
-            } catch(Exception e) {
-                
-            }
+            } catch (Exception e) {
 
-            rollOverColor.set(g);
-            if (orientation == Constants.VERTICAL) {
-                g.fillRoundRect(xIndexPos[index], yIndexPos[index], this.getWidth(), largeFont.getHeight(), 5, 5);
+
+
+                rollOverColor.set(g);
+                if (orientation == Constants.VERTICAL) {
+                    g.fillRoundRect(xIndexPos[index], yIndexPos[index], this.getWidth(), largeFont.getHeight(), 5, 5);
+                }
+
+                canvasCommand = new Command(menus[index], Command.OK, 0);
+                this.addCommand(canvasCommand);
+                initialColor.set(g);
+                g.drawString(menus[index], 0, yIndexPos[index] + largeFont.getHeight(), Graphics.BOTTOM | Graphics.LEFT);
+                this.index = index;
             }
-            
-            canvasCommand = new Command(menus[index], Command.OK, 0);
-            this.addCommand(canvasCommand);
-            initialColor.set(g);
-            g.drawString(menus[index], 0, yIndexPos[index] + largeFont.getHeight(), Graphics.BOTTOM | Graphics.LEFT);
-            this.index = index;
         }
 
         public void keyPressed(int keyCode) {
@@ -129,7 +131,7 @@ public class Menus {
                     break;
                 case FIRE:
                     display.setCurrent(screens[index]);
-                    //System.out.println("Fired " + menus[index]);
+                //System.out.println("Fired " + menus[index]);
             }
         }
 

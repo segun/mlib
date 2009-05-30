@@ -17,6 +17,6 @@ public abstract class BaseStore {
     public abstract byte[] toByteArray() throws IOException;
     public abstract boolean fromByteArray(byte[] data) throws IOException;
     public abstract int save(RecordStore rs) throws RecordStoreException, IOException;
-    public abstract boolean delete(RecordStore rs, int recordID) throws RecordStoreException, IOException;
-    public abstract boolean update(RecordStore rs, byte[] newData, int recordID) throws RecordStoreException, IOException;
+    public abstract boolean delete(RecordStore rs, int recordID) throws RecordStoreException;
+    public abstract boolean update(RecordStore rs, byte[] newData, int recordID) throws RecordStoreException;
 }

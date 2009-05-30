@@ -7,8 +7,8 @@ package com.trinisoft.mlib.db.decorator;
 
 import com.trinisoft.mlib.db.BaseStore;
 import java.io.IOException;
-import javax.microedition.rms.RecordComparator;
-import javax.microedition.rms.RecordFilter;
+import javax.microedition.rms.RecordStore;
+import javax.microedition.rms.RecordStoreException;
 
 /**
  *
@@ -16,25 +16,28 @@ import javax.microedition.rms.RecordFilter;
  */
 public abstract class BaseStoreAdapter extends BaseStore {
 
-    protected BaseStoreAdapter(BaseStore baseStore) {
-        
+    protected BaseStoreAdapter(BaseStore baseStore) {        
     }
-    
-    public boolean delete() {
+
+    public boolean delete(RecordStore rs, int recordID) throws RecordStoreException {
         return true;
     }
 
     public boolean fromByteArray(byte[] data) throws IOException {
-        System.out.println("decorator fromByteArray");
         return true;
+    }
+
+    public int save(RecordStore rs) throws RecordStoreException, IOException {
+        return 1;
     }
 
     public byte[] toByteArray() throws IOException {
-        System.out.println("decorator toByteArray");
         return new byte[1000];
     }
 
-    public boolean get(RecordComparator rc, RecordFilter rf) {
+    public boolean update(RecordStore rs, byte[] newData, int recordID) throws RecordStoreException {
         return true;
     }
+
+
 }
