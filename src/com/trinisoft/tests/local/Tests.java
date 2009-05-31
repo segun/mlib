@@ -34,6 +34,7 @@ public class Tests extends MIDlet {
         System.out.println(String.valueOf(MUtils.hasElement(v.elements(), "segun")));
         System.out.println(String.valueOf(MUtils.hasElement(v.elements(), "dele")));
         Display.getDisplay(this).setCurrent(list);
+        MStrings.split("name=deji:sname=segun:sage=21:sage=19", ":s");
     }
 
     public void pauseApp() {
