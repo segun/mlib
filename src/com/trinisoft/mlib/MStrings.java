@@ -26,11 +26,13 @@ public class MStrings {
         return retVector;
     }
 
-    public static void split(String string, String delimiter) {
+    public static Vector splitString(String string, String delimiter) {
+        Vector retValue = new Vector();
         String myString = string;
         while (myString.length() > 0) {
             try {
                 String one = myString.substring(0, myString.indexOf(delimiter));
+                retValue.addElement(one);
                 myString = myString.substring(one.length() + delimiter.length(), myString.length());
                 System.out.println(one);
                 System.out.println(myString);
@@ -38,5 +40,6 @@ public class MStrings {
                 break;
             }
         }
+        return retValue;
     }
 }
