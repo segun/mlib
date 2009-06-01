@@ -22,7 +22,7 @@ public class BufferedWriter {
 
     public void write(String line, boolean addNewLine) throws IOException {
         line += ((addNewLine) ? "\n" : "");
-        os.write(line.getBytes());
+        buffer = line;
     }
 
     public void append(String line, boolean addNewLine) {

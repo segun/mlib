@@ -20,7 +20,7 @@ public class Tests extends MIDlet {
     public void startApp() {
         List list = new List("Test", List.EXCLUSIVE);
         String ddd = "dele, femi, segun, dare";
-        Vector vec = MStrings.strToVector(ddd);
+        Vector vec = MStrings.splitString(ddd, ",");
         Enumeration enu = vec.elements();
         String s;
         while(enu.hasMoreElements()) {
