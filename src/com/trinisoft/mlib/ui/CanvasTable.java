@@ -38,7 +38,7 @@ public class CanvasTable extends Canvas {
     protected int currentCol = 0;
     protected String labels[] = {
         "Edit Cell", "Copy Cell", "Add Row", "Add Column", "Insert Row", "Insert Column", "Copy Row", "Copy Column",
-        "Delete Row", "Delete Column",};
+        "Delete Row", "Delete Column"};
     protected Command pasteCommand;
     protected Command commands[];
     protected Display display;
@@ -65,7 +65,6 @@ public class CanvasTable extends Canvas {
         this.numRow = data.length;
         this.numCol = data[0].length;
         this.header = header;
-        System.out.println(header.length + " : " + numRow);
         if (header.length != numCol) {
             throw new Exception("Header length mismatch");
         }
@@ -76,7 +75,6 @@ public class CanvasTable extends Canvas {
 
     protected void init() {
         commands = new Command[labels.length];
-        System.out.println(commands);
         for (int i = 0; i < labels.length; i++) {
             commands[i] = new Command(labels[i], Command.OK, i * 10);
             addCommand(commands[i]);
@@ -319,6 +317,23 @@ public class CanvasTable extends Canvas {
                         }
                     }
                 }
+                canvasTable.repaint();
+            }
+
+            if(c.getLabel().equals("Add Row")) {
+                String[][] temp = data;
+                numRow++;
+                data = new String[numRow][numCol];
+                for(int i = 0; i < temp.length; i++) {
+                    for(int j = 0; j < temp[i].length; j++) {
+                        data[i][j] = temp[i][j];
+                    }
+                }
+
+                for(int i = 0; i < numCol; i++) {
+                    data[numRow - 1][i] = "";
+                }
+                
                 canvasTable.repaint();
             }
 
