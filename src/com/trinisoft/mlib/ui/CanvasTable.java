@@ -22,28 +22,31 @@ import javax.microedition.midlet.MIDlet;
  */
 public class CanvasTable extends Canvas {
 
-    private int numRow;
-    private int numCol;
-    private String[][] data;
-    private String header[];
-    private Color bgColor;
-    private Color headerBGColor;
-    private Color lineColor;
-    private Color fontColor;
-    private int yPlus = 25;
-    private int xPlus = 50;
-    private int clipX = 0;
-    private int clipY = 0;
-    private int currentRow = 1;
-    private int currentCol = 0;
-    private String labels[] = {
+    protected int numRow;
+    protected int numCol;
+    protected String[][] data;
+    protected String header[];
+    protected Color bgColor;
+    protected Color headerBGColor;
+    protected Color lineColor;
+    protected Color fontColor;
+    protected int yPlus = 25;
+    protected int xPlus = 50;
+    protected int clipX = 0;
+    protected int clipY = 0;
+    protected int currentRow = 1;
+    protected int currentCol = 0;
+    protected String labels[] = {
         "Edit Cell", "Copy Cell", "Add Row", "Add Column", "Insert Row", "Insert Column", "Copy Row", "Copy Column",
         "Delete Row", "Delete Column",};
-    private Command commands[];
-    private Display display;
-    private MIDlet parent;
-    private CellEditor cellEditor;
-    private CanvasTable canvasTable;
+    protected Command pasteCommand;
+    protected Command commands[];
+    protected Display display;
+    protected MIDlet parent;
+    protected CellEditor cellEditor;
+    protected CanvasTable canvasTable;
+    protected String cellClipBoard = null;
+    protected String arrayClipBoard[] = null;
 
     public CanvasTable(String header[], int numRow, int numCol) throws Exception {
         this.numCol = numCol;
@@ -54,11 +57,7 @@ public class CanvasTable extends Canvas {
         }
 
         data = new String[numRow][numCol];
-        cellEditor = new CellEditor();
-
         init();
-
-        canvasTable = this;
     }
 
     public CanvasTable(String header[], String[][] data) throws Exception {
@@ -71,23 +70,21 @@ public class CanvasTable extends Canvas {
         }
 
         this.data = data;
-
-        cellEditor = new CellEditor();
-
         init();
-
-        canvasTable = this;
     }
 
-    private void init() {
+    protected void init() {
         commands = new Command[labels.length];
         System.out.println(commands);
         for (int i = 0; i < labels.length; i++) {
-            commands[i] = new Command(labels[i], Command.OK, i);
+            commands[i] = new Command(labels[i], Command.OK, i * 10);
             addCommand(commands[i]);
         }
-        
+
+        pasteCommand = new Command("Paste", Command.OK, 0);
         this.setCommandListener(new Commander());
+        cellEditor = new CellEditor();
+        canvasTable = this;
     }
 
     public void addData(int row, int col, String value) {
@@ -238,18 +235,18 @@ public class CanvasTable extends Canvas {
                 char[] chars = s.toCharArray();
                 int stringWidth = Font.getDefaultFont().charsWidth(chars, 0, chars.length);
 
-                while(stringWidth > xPlus) {                    
+                while (stringWidth > xPlus) {
                     s = s.substring(0, s.length() - 1);
                     chars = s.toCharArray();
                     stringWidth = Font.getDefaultFont().charsWidth(chars, 0, chars.length);
                 }
-                
+
                 g.drawString(s, x, y, Graphics.LEFT | Graphics.TOP);
             }
         }
     }
 
-    private class CellEditor extends TextBox {
+    protected class CellEditor extends TextBox {
 
         public CellEditor() {
             super("Cell Editor", data[currentRow - 1][currentCol], 255, TextField.ANY);
@@ -259,12 +256,24 @@ public class CanvasTable extends Canvas {
         }
     }
 
-    private class Commander implements CommandListener {
+    protected class Commander implements CommandListener {
 
         public void commandAction(Command c, Displayable d) {
             if (c.getLabel().equals("Edit Cell")) {
                 cellEditor.setString(data[currentRow - 1][currentCol]);
                 display.setCurrent(cellEditor);
+            }
+
+            if (c.getLabel().equals("Copy Cell")) {
+                cellClipBoard = data[currentRow - 1][currentCol];
+                arrayClipBoard = null;
+                canvasTable.addCommand(pasteCommand);
+            }
+
+            if (c.getLabel().equals("Paste")) {
+                if (cellClipBoard != null) {
+                    data[currentRow - 1][currentCol] = cellClipBoard;
+                }
             }
 
             //Cell Editor
