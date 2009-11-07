@@ -17,21 +17,22 @@ public class CanvasTableTest extends MIDlet {
     public void startApp() {
 
         String header[] = {
-            "A", "B", "C","D","E","F","G","H"
+            "A", "B", "C", "D", "E", "F", "G", "H"
         };
 
         String data[][] = {
-            {"one", "two", "three","1","2","3","four","five"},
-            {"four", "five", "six","1","2","3","four","five"},
-            {"7", "8", "9","1","2","3","four","five"},
-            {"10", "eleven", "twelve","1","2","3","four","five"},
-            {"10", "eleven", "twelve","1","2","3","four","five"},
-            {"10", "eleven", "twelve","1","2","3","four","five"},
-            {"10", "eleven", "twelve","1","2","3","four","five"},
-            {"10", "eleven", "twelve","1","2","3","four","five"}};
+            {"one", "two", "three", "1", "2", "3", "four", "five"},
+            {"four", "five", "six", "1", "2", "3", "four", "five"},
+            {"7", "8", "9", "1", "2", "3", "four", "five"},
+            {"10", "eleven", "twelve", "1", "2", "3", "four", "five"},
+            {"10", "eleven", "twelve", "1", "2", "3", "four", "five"},
+            {"a", "eleven", "twelve", "1", "2", "3", "four", "five"},
+            {"10", "m", "twelve", "1", "2", "3", "four", "five"},
+            {"u", "q", "twelve", "1", "2", "3", "four", "five"},
+            {"p", "t", "s", "1", "2", "3", "four", "five"}};
 
         CanvasTable cvTable = null;
-        
+
         try {
             cvTable = new CanvasTable(header, data);
             cvTable.setBgColor(new Color(0, 0, 0));

@@ -31,6 +31,8 @@ public class CanvasTable extends Canvas {
 
     private int currentRow = 1;
     private int currentCol = 0;
+
+    private int statusLineHeight = 25;
     
     public CanvasTable(String header[], int numRow, int numCol) throws Exception {
         this.numCol = numCol;
@@ -95,7 +97,7 @@ public class CanvasTable extends Canvas {
                     clipX = 0;
                 }
                 if(((currentCol * xPlus) + xPlus) > getWidth()) {
-                    clipX += 50;
+                    clipX += xPlus;
                 }
                 repaint();
                 break;
@@ -107,15 +109,31 @@ public class CanvasTable extends Canvas {
                 }
 
                 if(((currentCol * xPlus) + xPlus) > getWidth()) {
-                    clipX -= 50;
+                    clipX -= xPlus;
+                }
+                repaint();
+                break;
+            case UP:
+                currentRow--;
+                if(currentRow <= 0) {
+                    currentRow = 1;
+                    clipY = 0;
+                }
+
+                if(((currentRow * yPlus) + yPlus) > getHeight()) {
+                    clipY -= yPlus;
                 }
                 repaint();
                 break;
             case DOWN:
                 currentRow++;
-                if((currentRow + 1) > data.length) {
-                    currentRow = 0;
+                if(currentRow > data.length) {
+                    currentRow = 1;
                     clipY = 0;
+                }
+
+                if(((currentRow * yPlus) + yPlus) > getHeight()) {
+                    clipY += yPlus;
                 }
                 repaint();
                 break;
@@ -131,6 +149,11 @@ public class CanvasTable extends Canvas {
         //highlight current cell
         Color highlightColor = new Color(50, 50, 150);
         highlightColor.set(g);
+        if(currentRow == 0) {
+            setTitle(data[currentRow][currentCol]);
+        } else {
+            setTitle(data[currentRow - 1][currentCol]);
+        }
         int xx = currentCol * xPlus - clipX;
         int yy = currentRow * yPlus - clipY;
 
@@ -236,5 +259,6 @@ public class CanvasTable extends Canvas {
     public void setHeaderBGColor(Color headerBGColor) {
         this.headerBGColor = headerBGColor;
         this.lineColor = headerBGColor;
-    }    
+    }
+
 }
