@@ -38,6 +38,8 @@ public class CanvasTableTest extends MIDlet {
             cvTable.setBgColor(new Color(0, 0, 0));
             cvTable.setFontColor(new Color(255, 255, 255));
             cvTable.setHeaderBGColor(new Color(100, 100, 100));
+            cvTable.setDisplay(Display.getDisplay(this));
+            cvTable.setParent(this);
             Display.getDisplay(this).setCurrent(cvTable);
         } catch (Exception e) {
             e.printStackTrace();
