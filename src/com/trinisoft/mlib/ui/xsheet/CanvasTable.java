@@ -2,18 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.trinisoft.mlib.ui;
+package com.trinisoft.mlib.ui.xsheet;
 
 import com.trinisoft.mlib.Color;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Command;
-import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
-import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.lcdui.TextBox;
-import javax.microedition.lcdui.TextField;
 import javax.microedition.midlet.MIDlet;
 
 /**
@@ -21,10 +17,7 @@ import javax.microedition.midlet.MIDlet;
  * @author trinisoftinc
  */
 public class CanvasTable extends Canvas {
-
-    protected int numRow;
-    protected int numCol;
-    protected String[][] data;
+    
     protected String header[];
     protected Color bgColor;
     protected Color headerBGColor;
@@ -34,20 +27,25 @@ public class CanvasTable extends Canvas {
     protected int xPlus = 50;
     protected int clipX = 0;
     protected int clipY = 0;
-    protected int currentRow = 1;
-    protected int currentCol = 0;
     protected String labels[] = {
         "Edit Cell", "Copy Cell", "Add Row", "Add Column", "Insert Row", "Insert Column", "Copy Row", "Copy Column",
         "Delete Row", "Delete Column"};
-    protected Command pasteCommand;
     protected Command commands[];
-    protected Display display;
     protected MIDlet parent;
     protected CellEditor cellEditor;
     protected CanvasTable canvasTable;
-    protected String cellClipBoard = null;
-    protected String arrayClipBoard[] = null;
-    protected String clipBoard;
+
+    
+    public String cellClipBoard = null;
+    public String arrayClipBoard[] = null;
+    public String clipBoard;
+    public Command pasteCommand;
+    public int numRow;
+    public int numCol;
+    public Display display;
+    public String[][] data;
+    public int currentRow = 1;
+    public int currentCol = 0;
 
     public CanvasTable(String header[], int numRow, int numCol) throws Exception {
         this.numCol = numCol;
@@ -81,8 +79,8 @@ public class CanvasTable extends Canvas {
         }
 
         pasteCommand = new Command("Paste", Command.OK, 0);
-        this.setCommandListener(new Commander());
-        cellEditor = new CellEditor();
+        cellEditor = new CellEditor(currentRow, currentCol, data, this);
+        this.setCommandListener(new CanvasTableCommander(cellEditor, this));
         canvasTable = this;
     }
 
@@ -241,110 +239,6 @@ public class CanvasTable extends Canvas {
                 }
 
                 g.drawString(s, x, y, Graphics.LEFT | Graphics.TOP);
-            }
-        }
-    }
-
-    protected class CellEditor extends TextBox {
-
-        public CellEditor() {
-            super("Cell Editor", data[currentRow - 1][currentCol], 255, TextField.ANY);
-            this.addCommand(new Command("Update", Command.OK, 0));
-            this.addCommand(new Command("Cancel", Command.BACK, 1));
-            this.setCommandListener(new Commander());
-        }
-    }
-
-    protected class Commander implements CommandListener {
-
-        public void commandAction(Command c, Displayable d) {
-            if (c.getLabel().equals("Edit Cell")) {
-                cellEditor.setString(data[currentRow - 1][currentCol]);
-                display.setCurrent(cellEditor);
-            }
-
-            if (c.getLabel().equals("Copy Cell")) {
-                cellClipBoard = data[currentRow - 1][currentCol];
-                arrayClipBoard = null;
-                try {
-                    canvasTable.removeCommand(pasteCommand);
-                } catch(Exception e) {
-                }
-                canvasTable.addCommand(pasteCommand);
-            }
-
-            if(c.getLabel().equals("Copy Row")) {
-                cellClipBoard = null;
-                arrayClipBoard = new String[numCol];
-                for(int i = 0; i < numCol; i++) {
-                    arrayClipBoard[i] = data[currentRow - 1][i];
-                }
-                try {
-                    canvasTable.removeCommand(pasteCommand);
-                } catch(Exception e) {
-                }
-                canvasTable.addCommand(pasteCommand);
-                clipBoard = "row";
-            }
-
-            if(c.getLabel().equals("Copy Column")) {
-                cellClipBoard = null;
-                arrayClipBoard = new String[numRow];
-
-                for(int i = 0; i < numRow; i++) {
-                    arrayClipBoard[i] = data[i][currentCol];
-                }
-                try {
-                    canvasTable.removeCommand(pasteCommand);
-                } catch(Exception e) {
-                }
-                canvasTable.addCommand(pasteCommand);
-                clipBoard = "col";
-            }
-
-            if (c.getLabel().equals("Paste")) {
-                if (cellClipBoard != null) {
-                    data[currentRow - 1][currentCol] = cellClipBoard;
-                } else {
-                    if(clipBoard.equals("row")) {
-                        for(int i = 0; i < arrayClipBoard.length; i++) {
-                            data[currentRow - 1][i] = arrayClipBoard[i];
-                        }
-                    }
-                    if(clipBoard.equals("col")) {
-                        for(int i = 0; i < arrayClipBoard.length; i++) {
-                            data[i][currentCol] = arrayClipBoard[i];
-                        }
-                    }
-                }
-                canvasTable.repaint();
-            }
-
-            if(c.getLabel().equals("Add Row")) {
-                String[][] temp = data;
-                numRow++;
-                data = new String[numRow][numCol];
-                for(int i = 0; i < temp.length; i++) {
-                    for(int j = 0; j < temp[i].length; j++) {
-                        data[i][j] = temp[i][j];
-                    }
-                }
-
-                for(int i = 0; i < numCol; i++) {
-                    data[numRow - 1][i] = "";
-                }
-                
-                canvasTable.repaint();
-            }
-
-            //Cell Editor
-            if (d.equals(cellEditor) && c.getLabel().equals("Update")) {
-                data[currentRow - 1][currentCol] = cellEditor.getString();
-                canvasTable.repaint();
-                display.setCurrent(canvasTable);
-            }
-            if (d.equals(cellEditor) && c.getLabel().equals("Cancel")) {
-                display.setCurrent(canvasTable);
             }
         }
     }

@@ -5,7 +5,7 @@
 package com.trinisoft.tests.local;
 
 import com.trinisoft.mlib.Color;
-import com.trinisoft.mlib.ui.CanvasTable;
+import com.trinisoft.mlib.ui.xsheet.CanvasTable;
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.*;
 
