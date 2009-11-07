@@ -47,6 +47,7 @@ public class CanvasTable extends Canvas {
     protected CanvasTable canvasTable;
     protected String cellClipBoard = null;
     protected String arrayClipBoard[] = null;
+    protected String clipBoard;
 
     public CanvasTable(String header[], int numRow, int numCol) throws Exception {
         this.numCol = numCol;
@@ -267,13 +268,58 @@ public class CanvasTable extends Canvas {
             if (c.getLabel().equals("Copy Cell")) {
                 cellClipBoard = data[currentRow - 1][currentCol];
                 arrayClipBoard = null;
+                try {
+                    canvasTable.removeCommand(pasteCommand);
+                } catch(Exception e) {
+                }
                 canvasTable.addCommand(pasteCommand);
+            }
+
+            if(c.getLabel().equals("Copy Row")) {
+                cellClipBoard = null;
+                arrayClipBoard = new String[numCol];
+                for(int i = 0; i < numCol; i++) {
+                    arrayClipBoard[i] = data[currentRow - 1][i];
+                }
+                try {
+                    canvasTable.removeCommand(pasteCommand);
+                } catch(Exception e) {
+                }
+                canvasTable.addCommand(pasteCommand);
+                clipBoard = "row";
+            }
+
+            if(c.getLabel().equals("Copy Column")) {
+                cellClipBoard = null;
+                arrayClipBoard = new String[numRow];
+
+                for(int i = 0; i < numRow; i++) {
+                    arrayClipBoard[i] = data[i][currentCol];
+                }
+                try {
+                    canvasTable.removeCommand(pasteCommand);
+                } catch(Exception e) {
+                }
+                canvasTable.addCommand(pasteCommand);
+                clipBoard = "col";
             }
 
             if (c.getLabel().equals("Paste")) {
                 if (cellClipBoard != null) {
                     data[currentRow - 1][currentCol] = cellClipBoard;
+                } else {
+                    if(clipBoard.equals("row")) {
+                        for(int i = 0; i < arrayClipBoard.length; i++) {
+                            data[currentRow - 1][i] = arrayClipBoard[i];
+                        }
+                    }
+                    if(clipBoard.equals("col")) {
+                        for(int i = 0; i < arrayClipBoard.length; i++) {
+                            data[i][currentCol] = arrayClipBoard[i];
+                        }
+                    }
                 }
+                canvasTable.repaint();
             }
 
             //Cell Editor
