@@ -124,9 +124,11 @@ public class Menus {
             int gameAction = getGameAction(keyCode);
             switch (gameAction) {
                 case UP:
+                    System.out.println("UP");
                     move(Constants.DIR_UP);
                     break;
                 case DOWN:
+                    System.out.println("DPWN");
                     move(Constants.DIR_DOWN);
                     break;
                 case FIRE:

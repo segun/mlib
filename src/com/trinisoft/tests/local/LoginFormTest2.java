@@ -26,7 +26,7 @@ public class LoginFormTest2 extends MIDlet {
 
             new StoreDecorator(userClass).save(recordStore);
 
-            LoginForm loginForm = new LoginForm("lf", recordStore, null, null, Display.getDisplay(this));
+            LoginForm loginForm = new LoginForm("lf", recordStore, null, null, Display.getDisplay(this), "", "");
 
             Display.getDisplay(this).setCurrent(loginForm);            
         } catch (Exception e) {

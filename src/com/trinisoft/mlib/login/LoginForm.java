@@ -1,12 +1,12 @@
 package com.trinisoft.mlib.login;
 
 import com.trinisoft.mlib.login.db.UserClass;
+import com.trinisoft.mlib.ui.TickerForm;
 import java.io.IOException;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
-import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.TextField;
 import javax.microedition.rms.RecordEnumeration;
 import javax.microedition.rms.RecordStore;
@@ -21,7 +21,7 @@ import javax.microedition.rms.RecordStoreNotOpenException;
  *
  * @author segun
  */
-public class LoginForm extends Form implements CommandListener {
+public class LoginForm extends TickerForm implements CommandListener {
 
     String username;
     String password;
@@ -34,8 +34,8 @@ public class LoginForm extends Form implements CommandListener {
     Displayable errorDisplayable;
     Display display;
 
-    public LoginForm(String title, String username, String password, Displayable loggedInDisplayable, Displayable errorDisplayable, Display display) {
-        super(title);
+    public LoginForm(String title, String username, String password, Displayable loggedInDisplayable, Displayable errorDisplayable, Display display, String initialTickerText, String tickerURL) {
+        super(title, initialTickerText, tickerURL);
         this.username = username;
         this.password = password;
         this.loggedInDisplayable = loggedInDisplayable;
@@ -46,8 +46,8 @@ public class LoginForm extends Form implements CommandListener {
         init();
     }
 
-    public LoginForm(String title, RecordStore recordStore, Displayable loggedInDisplayable, Displayable errorDisplayable, Display display) {
-        super(title);
+    public LoginForm(String title, RecordStore recordStore, Displayable loggedInDisplayable, Displayable errorDisplayable, Display display, String initialTickerText, String tickerURL) {
+        super(title, initialTickerText, tickerURL);
         this.recordStore = recordStore;
 
         this.loggedInDisplayable = loggedInDisplayable;
@@ -79,10 +79,12 @@ public class LoginForm extends Form implements CommandListener {
                 return true;
             }
         } else if (method == 1) {
-            RecordEnumeration re = recordStore.enumerateRecords(null, null, true);
+            RecordEnumeration re = recordStore.enumerateRecords(null, null, true);            
             while (re.hasNextElement()) {
-                UserClass recordUserClass = new UserClass();
+                UserClass recordUserClass = new UserClass();                
                 recordUserClass.fromByteArray(re.nextRecord());
+                System.out.println("formusername: " + formUsername + " RE: " + recordUserClass.getUsername());
+                System.out.println("formpassword: " + formPassword + " RE: " + recordUserClass.getPassword());
                 if (formUsername.equals(recordUserClass.getUsername()) &&
                         formPassword.equals(recordUserClass.getPassword())) {
                     return true;
@@ -97,9 +99,15 @@ public class LoginForm extends Form implements CommandListener {
             if (login()) {
                 System.out.println("Logged");
                 if (loggedInDisplayable != null) {
+                    display.setCurrent(loggedInDisplayable);
                 }
             } else {
+                if(errorDisplayable != null) {
+                    display.setCurrent(errorDisplayable);
+                }
+                
                 System.out.println("bounced");
+
             }
         } catch (RecordStoreException rse) {
         } catch (IOException ioe) {

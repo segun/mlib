@@ -19,7 +19,7 @@ import javax.microedition.rms.RecordStoreException;
 public class LoginFormTests extends MIDlet {
 
     public void startApp() {
-        final LoginForm loginForm = new LoginForm("Hello", "fred", "smith", null, null, Display.getDisplay(this));
+        final LoginForm loginForm = new LoginForm("Hello", "fred", "smith", null, null, Display.getDisplay(this), "", "");
         loginForm.addCommand(new Command("Cancel", Command.CANCEL, 1));
 
         loginForm.setCommandListener(new CommandListener() {

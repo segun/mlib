@@ -14,9 +14,9 @@ import javax.microedition.rms.RecordStoreException;
  *
  * @author segun
  */
-public abstract class BaseStoreAdapter extends BaseStore {
+public abstract class StoreDecoratorAdapter extends BaseStore {
 
-    protected BaseStoreAdapter(BaseStore baseStore) {        
+    protected StoreDecoratorAdapter(BaseStore baseStore) {
     }
 
     public boolean delete(RecordStore rs, int recordID) throws RecordStoreException {

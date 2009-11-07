@@ -26,4 +26,12 @@ public class MStrings {
         }
         return retValue;
     }
+
+    public static String replace(String from, String oldString, String newString) {
+        int oldStringStartIndex = from.indexOf(oldString);
+        int oldStringEndIndex = oldStringStartIndex + oldString.length();        
+        String newFrom = from.substring(0, oldStringStartIndex) + newString + from.substring(oldStringEndIndex, from.length());
+        //System.out.println(newFrom);
+        return newFrom;
+    }
 }

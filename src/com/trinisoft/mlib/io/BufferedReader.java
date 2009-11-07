@@ -15,7 +15,7 @@ import java.io.InputStream;
 public class BufferedReader {
     InputStream is = null;
     public BufferedReader(InputStream is) {
-        this.is = is;
+        this.is = is;        
     }
 
     public String readLine() throws IOException{
@@ -23,6 +23,10 @@ public class BufferedReader {
         StringBuffer sb = new StringBuffer();
         int ch;
 
+        if(is.available() <= 0) {
+            return null;
+        }
+        
         while((ch = is.read()) != '\n') {
             sb.append((char) ch);
         }

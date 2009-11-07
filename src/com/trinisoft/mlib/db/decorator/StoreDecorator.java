@@ -14,7 +14,7 @@ import javax.microedition.rms.RecordStoreException;
  *
  * @author segun
  */
-public class StoreDecorator extends BaseStoreAdapter {
+public class StoreDecorator extends StoreDecoratorAdapter {
 
     public static final int MAXINT = 1000;
     BaseStore baseStore;
