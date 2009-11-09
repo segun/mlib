@@ -16,10 +16,6 @@ public class CanvasTableTest extends MIDlet {
 
     public void startApp() {
 
-        String header[] = {
-            "A", "B", "C", "D", "E", "F", "G", "H"
-        };
-
         String data[][] = {
             {"one", "two", "three", "1", "2", "3", "four", "five"},
             {"four", "five", "six", "1", "2", "3", "four", "five"},
@@ -34,7 +30,7 @@ public class CanvasTableTest extends MIDlet {
         CanvasTable cvTable = null;
 
         try {
-            cvTable = new CanvasTable(header, data);
+            cvTable = new CanvasTable(data);
             cvTable.setBgColor(new Color(0, 0, 0));
             cvTable.setFontColor(new Color(255, 255, 255));
             cvTable.setHeaderBGColor(new Color(100, 100, 100));

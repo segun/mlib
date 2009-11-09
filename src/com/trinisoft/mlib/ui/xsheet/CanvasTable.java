@@ -47,27 +47,21 @@ public class CanvasTable extends Canvas {
     public int currentRow = 1;
     public int currentCol = 0;
 
-    public CanvasTable(String header[], int numRow, int numCol) throws Exception {
+    public CanvasTable(int numRow, int numCol) {
         this.numCol = numCol;
         this.numRow = numRow;
-        this.header = header;
-        if (header.length != numCol) {
-            throw new Exception("Header length mismatch");
-        }
 
         data = new String[numRow][numCol];
+        
         init();
     }
 
-    public CanvasTable(String header[], String[][] data) throws Exception {
+    public CanvasTable(String[][] data) throws Exception {
         this.numRow = data.length;
         this.numCol = data[0].length;
-        this.header = header;
-        if (header.length != numCol) {
-            throw new Exception("Header length mismatch");
-        }
+        
+        this.data = data;        
 
-        this.data = data;
         init();
     }
 
@@ -82,6 +76,19 @@ public class CanvasTable extends Canvas {
         cellEditor = new CellEditor(currentRow, currentCol, data, this);
         this.setCommandListener(new CanvasTableCommander(cellEditor, this));
         canvasTable = this;
+        computeHeader();
+    }
+
+    public void computeHeader() {
+        header = new String[numCol];
+        for(int i = 0; i < numCol; i++) {
+            int howMany = (i/27) + 1;
+            String headerString = "";
+            for(int j = 0; j < howMany; j++) {
+                headerString += String.valueOf((char)(65 + i));
+            }
+            header[i] = headerString;
+        }
     }
 
     public void addData(int row, int col, String value) {
@@ -177,7 +184,8 @@ public class CanvasTable extends Canvas {
         Color highlightColor = new Color(50, 50, 150);
         highlightColor.set(g);
         if (currentRow == 0) {
-            setTitle(data[currentRow][currentCol]);
+            System.out.println("CR: " + currentRow + "CC: " + currentCol);
+            //setTitle(data[currentRow][currentCol]);
         } else {
             setTitle(data[currentRow - 1][currentCol]);
         }
