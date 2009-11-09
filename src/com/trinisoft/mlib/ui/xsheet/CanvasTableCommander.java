@@ -4,6 +4,8 @@
  */
 package com.trinisoft.mlib.ui.xsheet;
 
+import javax.microedition.lcdui.Alert;
+import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Displayable;
@@ -102,10 +104,10 @@ public class CanvasTableCommander implements CommandListener {
             canvasTable.repaint();
         }
 
-        if(c.getLabel().equals("Add Column")) {
+        if (c.getLabel().equals("Add Column")) {
             String[][] temp = canvasTable.data;
             String tempHeader[] = canvasTable.header;
-            
+
             canvasTable.numCol++;
             canvasTable.data = new String[canvasTable.numRow][canvasTable.numCol];
             canvasTable.header = new String[canvasTable.numCol];
@@ -119,27 +121,27 @@ public class CanvasTableCommander implements CommandListener {
             for (int i = 0; i < canvasTable.numRow; i++) {
                 canvasTable.data[i][canvasTable.numCol - 1] = "";
             }
-            
+
             canvasTable.computeHeader();
-            
+
             canvasTable.repaint();
         }
 
-        if(c.getLabel().equals("Insert Row")) {
+        if (c.getLabel().equals("Insert Row")) {
             String[][] temp = canvasTable.data;
             int currentRow = canvasTable.currentRow - 1;
             canvasTable.numRow++;
             canvasTable.data = new String[canvasTable.numRow][canvasTable.numCol];
 
-            for(int i = 0; i < canvasTable.numRow; i++) {
-                for(int j = 0; j < canvasTable.numCol; j++) {
-                    if(i == currentRow) {
-                        for(int k = 0; k < temp[i].length; k++) {
+            for (int i = 0; i < canvasTable.numRow; i++) {
+                for (int j = 0; j < canvasTable.numCol; j++) {
+                    if (i == currentRow) {
+                        for (int k = 0; k < temp[i].length; k++) {
                             canvasTable.data[i][k] = "";
                         }
-                    } else if(i > currentRow) {
+                    } else if (i > currentRow) {
                         canvasTable.data[i][j] = temp[i - 1][j];
-                    } else if(i < currentRow) {
+                    } else if (i < currentRow) {
                         canvasTable.data[i][j] = temp[i][j];
                     }
                 }
@@ -148,19 +150,19 @@ public class CanvasTableCommander implements CommandListener {
             canvasTable.repaint();
         }
 
-        if(c.getLabel().equals("Insert Column")) {
+        if (c.getLabel().equals("Insert Column")) {
             String[][] temp = canvasTable.data;
-            int currentCol = canvasTable.currentCol;            
+            int currentCol = canvasTable.currentCol;
             canvasTable.numCol++;
             canvasTable.data = new String[canvasTable.numRow][canvasTable.numCol];
 
-            for(int i = 0; i < canvasTable.numRow; i++) {
-                for(int j = 0; j < canvasTable.numCol; j++) {
-                    if(j == currentCol) {
-                        canvasTable.data[i][currentCol] = "";                        
-                    } else if(j > currentCol) {
+            for (int i = 0; i < canvasTable.numRow; i++) {
+                for (int j = 0; j < canvasTable.numCol; j++) {
+                    if (j == currentCol) {
+                        canvasTable.data[i][currentCol] = "";
+                    } else if (j > currentCol) {
                         canvasTable.data[i][j] = temp[i][j - 1];
-                    } else if(j < currentCol) {
+                    } else if (j < currentCol) {
                         canvasTable.data[i][j] = temp[i][j];
                     }
                 }
@@ -170,8 +172,40 @@ public class CanvasTableCommander implements CommandListener {
             canvasTable.repaint();
         }
 
-        if(c.getLabel().equals("Delete Row")) {
-            
+        if (c.getLabel().equals("Delete Row")) {
+            final int currentRow = canvasTable.currentRow - 1;
+            Alert l = new Alert("xSheet Message", "Are you sure you want to delete row " + (currentRow + 1), null, AlertType.ALARM);
+            l.setTimeout(Alert.FOREVER);
+
+            l.addCommand(new Command("OK", Command.OK, 0));
+            l.addCommand(new Command("Cancel", Command.BACK, 0));
+            l.setCommandListener(new CommandListener() {
+
+                public void commandAction(Command c, Displayable d) {
+                    if (c.getLabel().equals("OK")) {
+                        String temp[][] = canvasTable.data;
+                        canvasTable.numRow--;
+                        canvasTable.data = new String[canvasTable.numRow][canvasTable.numCol];
+
+                        for (int i = 0; i < temp.length; i++) {
+                            for (int j = 0; j < temp[i].length; j++) {
+                                if (i == currentRow) {
+                                } else if (i > currentRow) {
+                                    canvasTable.data[i - 1][j] = temp[i][j];
+                                } else if (i < currentRow) {
+                                    canvasTable.data[i][j] = temp[i][j];
+                                }
+                            }
+                        }
+                        canvasTable.display.setCurrent(canvasTable);
+                        canvasTable.repaint();
+                    } else {
+                        canvasTable.display.setCurrent(canvasTable);
+                        canvasTable.repaint();
+                    }
+                }
+            });
+            canvasTable.display.setCurrent(l);
         }
 
         //Cell Editor

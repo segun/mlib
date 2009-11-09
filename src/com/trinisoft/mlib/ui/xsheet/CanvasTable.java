@@ -13,7 +13,6 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.midlet.MIDlet;
 
 /**
- *
  * @author trinisoftinc
  */
 public class CanvasTable extends Canvas {
