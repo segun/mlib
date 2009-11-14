@@ -6,7 +6,6 @@
 package com.trinisoft.mlib.ui;
 
 import java.util.TimerTask;
-import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Ticker;
 import javax.microedition.rms.RecordStore;
 
@@ -17,13 +16,13 @@ import javax.microedition.rms.RecordStore;
 public class TickerForm extends Form {
 
     public TickerForm(String title, String initialText, String tickerURL) {
-        super(title);
+        super(title, null);
 
         this.setTicker(new Ticker(initialText));
     }
 
     public TickerForm(String title, String initialText, RecordStore store) {
-        super(title);
+        super(title, null);
 
         this.setTicker(new Ticker(initialText));
     }

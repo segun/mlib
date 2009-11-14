@@ -22,14 +22,14 @@ import javax.microedition.lcdui.TextField;
 public class Form extends javax.microedition.lcdui.Form {
 
     Controller controller;
+    Properties properties = new Properties();
 
     public Form(String title, Controller controller) {
         super(title);
         this.controller = controller;        
     }
 
-    public void submit() {
-        Properties properties = new Properties();
+    public void submit() {        
         int itemCount = this.size();
         for(int i = 0; i < itemCount; i++) {
             Item item = this.get(i);
@@ -67,5 +67,13 @@ public class Form extends javax.microedition.lcdui.Form {
         }
 
         controller.service(properties);
+    }
+
+    public int getResponceCode() {
+        return ((Integer) properties.getParameter("response-code")).intValue();
+    }
+
+    public String getResponseText() {
+        return properties.getParameter("response-text").toString();
     }
 }
