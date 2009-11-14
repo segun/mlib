@@ -208,6 +208,45 @@ public class CanvasTableCommander implements CommandListener {
             canvasTable.display.setCurrent(l);
         }
 
+        if (c.getLabel().equals("Delete Column")) {
+            final int currentCol = canvasTable.currentCol;
+            Alert l = new Alert("xSheet Message", "Are you sure you want to delete column " + canvasTable.header[currentCol], null, AlertType.ALARM);
+            l.setTimeout(Alert.FOREVER);
+
+            l.addCommand(new Command("OK", Command.OK, 0));
+            l.addCommand(new Command("Cancel", Command.BACK, 0));
+            l.setCommandListener(new CommandListener() {
+
+                public void commandAction(Command c, Displayable d) {
+                    if (c.getLabel().equals("OK")) {
+                        System.out.println("CC: " + canvasTable.currentCol);
+                        String temp[][] = canvasTable.data;
+                        canvasTable.numCol--;
+                        canvasTable.data = new String[canvasTable.numRow][canvasTable.numCol];
+
+                        for (int i = 0; i < temp.length; i++) {
+                            for (int j = 0; j < temp[i].length; j++) {
+                                if (j == currentCol) {
+                                } else if (j > currentCol) {
+                                    canvasTable.data[i][j - 1] = temp[i][j];
+                                } else if (i < currentCol) {
+                                    canvasTable.data[i][j] = temp[i][j];
+                                }
+                            }
+                        }
+                        canvasTable.computeHeader();
+                        canvasTable.display.setCurrent(canvasTable);
+                        canvasTable.repaint();                        
+                    } else {
+                        canvasTable.computeHeader();
+                        canvasTable.display.setCurrent(canvasTable);                        
+                        canvasTable.repaint();
+                    }
+                }
+            });
+            canvasTable.display.setCurrent(l);
+        }
+
         //Cell Editor
         if (d.equals(cellEditor) && c.getLabel().equals("Update")) {
             canvasTable.data[canvasTable.currentRow - 1][canvasTable.currentCol] = cellEditor.getString();

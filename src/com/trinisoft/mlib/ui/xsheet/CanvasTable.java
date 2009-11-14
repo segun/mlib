@@ -28,7 +28,7 @@ public class CanvasTable extends Canvas {
     protected int clipY = 0;
     protected String labels[] = {
         "Edit Cell", "Copy Cell", "Add Row", "Add Column", "Insert Row", "Insert Column", "Copy Row", "Copy Column",
-        "Delete Row", "Delete Column"};
+        "Delete Row"/*, "Delete Column"*/};
     protected Command commands[];
     protected MIDlet parent;
     protected CellEditor cellEditor;
