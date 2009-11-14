@@ -6,6 +6,7 @@ package com.trinisoft.tests.local;
 
 import com.trinisoft.mlib.Color;
 import com.trinisoft.mlib.ui.xsheet.CanvasTable;
+import com.trinisoft.mlib.util.Properties;
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.*;
 
@@ -30,6 +31,8 @@ public class CanvasTableTest extends MIDlet {
         CanvasTable cvTable = null;
 
         try {
+            Properties properties = new Properties();
+            properties.setParameter("segun", "olu");
             cvTable = new CanvasTable(data);
             cvTable.setBgColor(new Color(0, 0, 0));
             cvTable.setFontColor(new Color(255, 255, 255));
