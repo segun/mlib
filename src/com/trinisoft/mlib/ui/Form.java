@@ -33,7 +33,8 @@ public class Form extends javax.microedition.lcdui.Form {
         int itemCount = this.size();
         for(int i = 0; i < itemCount; i++) {
             Item item = this.get(i);
-            String key = item.getClass().getName();
+            String key = item.getLabel();
+            System.out.println("KEY: " + key);
 
             if(item instanceof ChoiceGroup) {
                 ChoiceGroup choiceGroup = (ChoiceGroup) item;
@@ -69,7 +70,7 @@ public class Form extends javax.microedition.lcdui.Form {
         controller.service(properties);
     }
 
-    public int getResponceCode() {
+    public int getResponseCode() {
         return ((Integer) properties.getParameter("response-code")).intValue();
     }
 
