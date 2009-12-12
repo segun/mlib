@@ -66,7 +66,7 @@ public class CanvasTable extends Canvas {
     protected void init() {
         commands = new Command[labels.length];
         for (int i = 0; i < labels.length; i++) {
-            commands[i] = new Command(labels[i], Command.OK, i * 10);
+            commands[i] = new Command(labels[i], Command.OK, (i + 1) * 100);
             addCommand(commands[i]);
         }
 
