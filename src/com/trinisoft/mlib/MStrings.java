@@ -56,4 +56,17 @@ public class MStrings {
         }
         return retVal;
     }
+
+    public static String[] add(String[] a, String[] b) {
+        String[] retVal = new String[a.length + b.length];
+        int i = 0;
+        for(i = 0; i < a.length; i++) {
+            retVal[i] = a[i];
+        }
+        for(int j = 0; j < b.length; j++) {
+            retVal[j + i] = b[j];
+        }
+        
+        return retVal;
+    }
 }
