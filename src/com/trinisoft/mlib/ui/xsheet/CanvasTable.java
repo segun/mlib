@@ -17,7 +17,7 @@ import javax.microedition.midlet.MIDlet;
  * @author trinisoftinc
  */
 public class CanvasTable extends Canvas {
-    
+
     protected String header[];
     protected Color bgColor;
     protected Color headerBGColor;
@@ -34,8 +34,6 @@ public class CanvasTable extends Canvas {
     protected MIDlet parent;
     protected CellEditor cellEditor;
     protected CanvasTable canvasTable;
-
-    
     public String cellClipBoard = null;
     public String arrayClipBoard[] = null;
     public String clipBoard;
@@ -52,15 +50,15 @@ public class CanvasTable extends Canvas {
         this.numRow = numRow;
 
         data = new String[numRow][numCol];
-        
+
         init();
     }
 
     public CanvasTable(String[][] data) {
         this.numRow = data.length;
         this.numCol = data[0].length;
-        
-        this.data = data;        
+
+        this.data = data;
 
         init();
     }
@@ -85,11 +83,11 @@ public class CanvasTable extends Canvas {
 
     public void computeHeader() {
         header = new String[numCol];
-        for(int i = 0; i < numCol; i++) {
-            int howMany = (i/27) + 1;
+        for (int i = 0; i < numCol; i++) {
+            int howMany = (i / 27) + 1;
             String headerString = "";
-            for(int j = 0; j < howMany; j++) {
-                headerString += String.valueOf((char)(65 + i));
+            for (int j = 0; j < howMany; j++) {
+                headerString += String.valueOf((char) (65 + i));
             }
             header[i] = headerString;
         }
@@ -241,7 +239,7 @@ public class CanvasTable extends Canvas {
 
                 //truncate data if longer than cell
                 String s = data[i][j];
-                if(s == null) {
+                if (s == null) {
                     s = " ";
                 }
                 char[] chars = s.toCharArray();
@@ -272,6 +270,8 @@ public class CanvasTable extends Canvas {
 
     public void setData(String[][] data) {
         this.data = data;
+        this.numRow = data.length;
+        this.numCol = data[0].length;
         repaint();
     }
 
@@ -312,7 +312,7 @@ public class CanvasTable extends Canvas {
     }
 
     public void setHeaderBGColor(Color headerBGColor) {
-        this.headerBGColor = headerBGColor;        
+        this.headerBGColor = headerBGColor;
     }
 
     public Display getDisplay() {
