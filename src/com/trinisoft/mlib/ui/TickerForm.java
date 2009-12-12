@@ -15,26 +15,26 @@ import javax.microedition.rms.RecordStore;
  */
 public class TickerForm extends Form {
 
-    public TickerForm(String title, String initialText, String tickerURL, Controller controller) {
-        super(title, controller);
+    public TickerForm(String title, String initialText, String tickerURL, Controller controller, boolean clearItems) {
+        super(title, controller, clearItems);
 
         this.setTicker(new Ticker(initialText));
     }
 
-    public TickerForm(String title, String initialText, RecordStore store, Controller controller) {
-        super(title, controller);
+    public TickerForm(String title, String initialText, RecordStore store, Controller controller, boolean clearItems) {
+        super(title, controller, clearItems);
 
         this.setTicker(new Ticker(initialText));
     }
 
     public TickerForm(String title, String initialText, String tickerURL) {
-        super(title, null);
+        super(title, null, false);
 
         this.setTicker(new Ticker(initialText));
     }
 
     public TickerForm(String title, String initialText, RecordStore store) {
-        super(title, null);
+        super(title, null, false);
 
         this.setTicker(new Ticker(initialText));
     }

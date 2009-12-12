@@ -5,6 +5,7 @@
 package com.trinisoft.mlib.ui.xsheet;
 
 import com.trinisoft.mlib.Color;
+import com.trinisoft.mlib.util.Echo;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Display;
@@ -55,7 +56,7 @@ public class CanvasTable extends Canvas {
         init();
     }
 
-    public CanvasTable(String[][] data) throws Exception {
+    public CanvasTable(String[][] data) {
         this.numRow = data.length;
         this.numCol = data[0].length;
         
@@ -75,6 +76,10 @@ public class CanvasTable extends Canvas {
         cellEditor = new CellEditor(currentRow, currentCol, data, this);
         this.setCommandListener(new CanvasTableCommander(cellEditor, this));
         canvasTable = this;
+        bgColor = new Color(0, 0, 0);
+        headerBGColor = new Color(100, 100, 100);
+        fontColor = new Color(255, 255, 255);
+        lineColor = headerBGColor;
         computeHeader();
     }
 
@@ -236,6 +241,9 @@ public class CanvasTable extends Canvas {
 
                 //truncate data if longer than cell
                 String s = data[i][j];
+                if(s == null) {
+                    s = " ";
+                }
                 char[] chars = s.toCharArray();
                 int stringWidth = Font.getDefaultFont().charsWidth(chars, 0, chars.length);
 
@@ -264,6 +272,7 @@ public class CanvasTable extends Canvas {
 
     public void setData(String[][] data) {
         this.data = data;
+        repaint();
     }
 
     public int getNumCol() {
@@ -303,8 +312,7 @@ public class CanvasTable extends Canvas {
     }
 
     public void setHeaderBGColor(Color headerBGColor) {
-        this.headerBGColor = headerBGColor;
-        this.lineColor = headerBGColor;
+        this.headerBGColor = headerBGColor;        
     }
 
     public Display getDisplay() {

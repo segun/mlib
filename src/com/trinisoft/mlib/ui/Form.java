@@ -7,6 +7,7 @@ package com.trinisoft.mlib.ui;
 
 import com.trinisoft.mlib.util.Controller;
 import com.trinisoft.mlib.util.Properties;
+import com.trinisoft.mlib.util.Response;
 import java.util.Date;
 import javax.microedition.lcdui.ChoiceGroup;
 import javax.microedition.lcdui.DateField;
@@ -23,10 +24,13 @@ public class Form extends javax.microedition.lcdui.Form {
 
     Controller controller;
     Properties properties = new Properties();
+    boolean clearItems = false;
 
-    public Form(String title, Controller controller) {
+    
+    public Form(String title, Controller controller, boolean clearItems) {
         super(title);
-        this.controller = controller;        
+        this.controller = controller;
+        this.clearItems = clearItems;
     }
 
     public void submit() {        
@@ -34,7 +38,6 @@ public class Form extends javax.microedition.lcdui.Form {
         for(int i = 0; i < itemCount; i++) {
             Item item = this.get(i);
             String key = item.getLabel();
-            System.out.println("KEY: " + key);
 
             if(item instanceof ChoiceGroup) {
                 ChoiceGroup choiceGroup = (ChoiceGroup) item;
@@ -68,13 +71,36 @@ public class Form extends javax.microedition.lcdui.Form {
         }
 
         controller.service(properties);
+        if(clearItems) {
+            clearItems();
+        }
+    }
+
+    private void clearItems() {
+        int itemCount = this.size();
+        for(int i = 0; i < itemCount; i++) {
+            Item item = this.get(i);
+            String key = item.getLabel();
+
+            if(item instanceof DateField) {
+                ((DateField) item).setDate(new Date());                
+            }
+
+            if(item instanceof TextField) {
+                ((TextField) item).setString("");
+            }
+
+            if(item instanceof Gauge) {
+                ((Gauge) item).setValue(0);
+            }
+        }
     }
 
     public int getResponseCode() {
-        return ((Integer) properties.getParameter("response-code")).intValue();
+        return ((Response) properties.getParameter("response")).getResponseCode();
     }
 
     public String getResponseText() {
-        return properties.getParameter("response-text").toString();
+        return ((Response)properties.getParameter("response")).getResponseText();
     }
 }
