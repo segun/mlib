@@ -29,9 +29,31 @@ public class MStrings {
 
     public static String replace(String from, String oldString, String newString) {
         int oldStringStartIndex = from.indexOf(oldString);
-        int oldStringEndIndex = oldStringStartIndex + oldString.length();        
+        int oldStringEndIndex = oldStringStartIndex + oldString.length();
         String newFrom = from.substring(0, oldStringStartIndex) + newString + from.substring(oldStringEndIndex, from.length());
         //System.out.println(newFrom);
         return newFrom;
+    }
+
+    public static String[] sort(String toSort[], boolean asc) {
+        String[] retVal = toSort;
+        for (int i = 0; i < retVal.length; i++) {
+            for (int j = i; j < retVal.length; j++) {
+                if (asc) {
+                    if (retVal[i].compareTo(retVal[j]) > 0) {
+                        String temp = retVal[i];
+                        retVal[i] = retVal[j];
+                        retVal[j] = temp;
+                    }
+                } else {
+                    if (retVal[i].compareTo(retVal[j]) < 0) {
+                        String temp = retVal[i];
+                        retVal[i] = retVal[j];
+                        retVal[j] = temp;
+                    }
+                }
+            }
+        }
+        return retVal;
     }
 }
