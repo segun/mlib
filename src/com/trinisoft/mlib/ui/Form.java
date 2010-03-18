@@ -22,9 +22,9 @@ import javax.microedition.lcdui.TextField;
  */
 public class Form extends javax.microedition.lcdui.Form {
 
-    Controller controller;
-    Properties properties = new Properties();
-    boolean clearItems = false;
+    private Controller controller;
+    private Properties properties = new Properties();
+    private boolean clearItems = false;
 
     
     public Form(String title, Controller controller, boolean clearItems) {
@@ -33,6 +33,10 @@ public class Form extends javax.microedition.lcdui.Form {
         this.clearItems = clearItems;
     }
 
+    public Properties getProperties() {
+        return properties;    
+    }
+    
     public void submit() {        
         int itemCount = this.size();
         for(int i = 0; i < itemCount; i++) {
