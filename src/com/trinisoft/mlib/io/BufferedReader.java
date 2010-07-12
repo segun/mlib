@@ -7,6 +7,7 @@ package com.trinisoft.mlib.io;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Vector;
 
 /**
  *
@@ -14,25 +15,38 @@ import java.io.InputStream;
  */
 public class BufferedReader {
     InputStream is = null;
+    Vector lines;
+    int currentLine = 0;
+    
     public BufferedReader(InputStream is) {
-        this.is = is;        
+        this.is = is;
+        lines = new Vector();
+        readIntoVector();
+    }
+
+    private void readIntoVector() {
+        int ch;
+        StringBuffer buffer = new StringBuffer();
+        try {
+            while ((ch = is.read()) != -1) {
+                if ((char) ch != '\n') {
+                    buffer.append((char) ch);
+                } else {
+                    lines.addElement(buffer.toString());
+                    buffer = new StringBuffer();
+                }
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public String readLine() throws IOException{
-        String line = null;
-        StringBuffer sb = new StringBuffer();
-        int ch;
-
-        if(is.available() <= 0) {
+        if(currentLine < lines.size()) {
+            return lines.elementAt(currentLine++).toString();
+        } else {
             return null;
         }
-        
-        while((ch = is.read()) != '\n') {
-            sb.append((char) ch);
-        }
-        sb.append('\n');
-        line = sb.toString();
-        return line;
     }
 
     public int read() throws IOException {
@@ -41,5 +55,9 @@ public class BufferedReader {
     
     public void close() throws IOException {
         is.close();
+    }
+
+    public void reset() {
+        currentLine = 0;
     }
 }

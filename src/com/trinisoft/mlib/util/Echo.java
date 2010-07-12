@@ -25,4 +25,12 @@ public class Echo {
     public static void err(Object o) {
         System.err.println(o);
     }
+
+    public static void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+    }
 }
