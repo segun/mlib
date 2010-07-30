@@ -15,7 +15,7 @@ import java.util.Vector;
  */
 public class BufferedReader {
     InputStream is = null;
-    Vector lines;
+    private Vector lines;
     int currentLine = 0;
     
     public BufferedReader(InputStream is) {
