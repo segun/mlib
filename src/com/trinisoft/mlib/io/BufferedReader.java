@@ -27,14 +27,20 @@ public class BufferedReader {
     private void readIntoVector() {
         int ch;
         StringBuffer buffer = new StringBuffer();
+        boolean isNewLine = false;
         try {
             while ((ch = is.read()) != -1) {
                 if ((char) ch != '\n') {
                     buffer.append((char) ch);
+                    isNewLine = true;
                 } else {
                     lines.addElement(buffer.toString());
                     buffer = new StringBuffer();
+                    isNewLine = false;
                 }
+            }
+            if(!isNewLine) {
+                lines.addElement(buffer.toString());
             }
         } catch (IOException ex) {
             ex.printStackTrace();

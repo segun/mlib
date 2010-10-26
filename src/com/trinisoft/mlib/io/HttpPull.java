@@ -4,7 +4,6 @@
  */
 package com.trinisoft.mlib.io;
 
-import com.trinisoft.mlib.login.db.UserClass;
 import com.trinisoft.mlib.util.Echo;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +38,11 @@ public class HttpPull {
         this.APIKey = APIKey;
     }
 
-    public String get(String url) throws IOException {
+    public String get(String url, String optionalParameters) throws IOException {
+        if(optionalParameters != null) {
+            url += optionalParameters;
+        }
+        Echo.outln(url);
         HttpConnection connection = (HttpConnection) Connector.open(url);
 
         connection.setRequestMethod(HttpConnection.GET);
