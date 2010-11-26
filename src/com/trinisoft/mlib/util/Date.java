@@ -71,6 +71,8 @@ public class Date extends java.util.Date {
     }
 
     public boolean isSameMonthAs(Date date) {
+        Echo.outln("" + date.getMonth());
+        Echo.outln("" + this.getMonth());
         if (this.getYear() == date.getYear()) {
             if (this.getMonth() == date.getMonth()) {
                 return true;
@@ -133,15 +135,20 @@ public class Date extends java.util.Date {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(this);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String dd = day < 10 ? "0" + day : "" + day;
         int month = calendar.get(Calendar.MONTH) + 1;
+        String mm = month < 10 ? "0" + month : "" + month;
         int year = calendar.get(Calendar.YEAR);
+        String yy = year < 10 ? "0" + year : "" + year;
 
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        String h = hour < 10 ? "0" + hour : "" + hour;
         int min = calendar.get(Calendar.MINUTE);
+        String m = min < 10 ? "0" + min : "" + min;
         int am_pm = calendar.get(Calendar.AM_PM);
         String am_pm_s = (am_pm == Calendar.AM) ? "AM" : "PM";
 
-        return "" + day + "/" + month + "/" + year + "  " + hour + ":" + min + "  " + am_pm_s;
+        return "" + dd + "/" + mm + "/" + yy + "  " + h + ":" + m + "  " + am_pm_s;
     }
 
     public void fromString(String s) {
