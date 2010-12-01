@@ -71,8 +71,6 @@ public class Date extends java.util.Date {
     }
 
     public boolean isSameMonthAs(Date date) {
-        Echo.outln("" + date.getMonth());
-        Echo.outln("" + this.getMonth());
         if (this.getYear() == date.getYear()) {
             if (this.getMonth() == date.getMonth()) {
                 return true;

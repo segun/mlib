@@ -35,6 +35,18 @@ public class MStrings {
         return newFrom;
     }
 
+    public static String replaceAll(String from, String oldString, String newString) {
+        int oldStringStartIndex = from.indexOf(oldString);
+        String newFrom = from;
+        while (oldStringStartIndex >= 0) {            
+            int oldStringEndIndex = oldStringStartIndex + oldString.length();
+            newFrom = newFrom.substring(0, oldStringStartIndex) + newString + newFrom.substring(oldStringEndIndex, newFrom.length());
+            oldStringStartIndex = newFrom.indexOf(oldString);
+        }
+        //System.out.println(newFrom);
+        return newFrom;
+    }
+
     public static String[] sort(String toSort[], boolean asc) {
         String[] retVal = toSort;
         for (int i = 0; i < retVal.length; i++) {
