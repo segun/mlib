@@ -42,7 +42,6 @@ public class HttpPull {
         if(optionalParameters != null) {
             url += optionalParameters;
         }
-        Echo.outln(url);
         HttpConnection connection = (HttpConnection) Connector.open(url);
 
         connection.setRequestMethod(HttpConnection.GET);
@@ -63,7 +62,11 @@ public class HttpPull {
         }
     }
 
-    public String post(String url, String query) throws IOException {
+    public String post(String url, String query, String optionalParameters) throws IOException {
+        if(optionalParameters != null) {
+            url += optionalParameters;
+        }
+        Echo.outln(url);        
         HttpConnection connection;
         connection = (HttpConnection) Connector.open(url);
 
@@ -71,10 +74,12 @@ public class HttpPull {
         connection.setRequestProperty("User-Agent", "Profile/MIDP-1.0 Confirguration/CLDC-1.0");
         connection.setRequestProperty("Accept_Language", "en-US");
         connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        connection.setRequestProperty("Content-Length", Integer.toString(query.getBytes().length));
+        connection.setRequestProperty("api-key", APIKey);
 
         OutputStream os = connection.openDataOutputStream();
         os.write(query.getBytes());
-        os.flush();
+        //os.flush();
         BufferedReader reader = new BufferedReader(connection.openDataInputStream());
         String line = "";
         StringBuffer buffer = new StringBuffer();
@@ -83,6 +88,7 @@ public class HttpPull {
             Echo.outln(line);
         }
         String retval = buffer.toString();
+        Echo.outln(retval);
         return retval;
     }
 }

@@ -35,6 +35,18 @@ public class MStrings {
         return newFrom;
     }
 
+    public static String replaceAll(String from, String oldString, String newString) {
+        int oldStringStartIndex = from.indexOf(oldString);
+        String newFrom = from;
+        while (oldStringStartIndex >= 0) {            
+            int oldStringEndIndex = oldStringStartIndex + oldString.length();
+            newFrom = newFrom.substring(0, oldStringStartIndex) + newString + newFrom.substring(oldStringEndIndex, newFrom.length());
+            oldStringStartIndex = newFrom.indexOf(oldString);
+        }
+        //System.out.println(newFrom);
+        return newFrom;
+    }
+
     public static String[] sort(String toSort[], boolean asc) {
         String[] retVal = toSort;
         for (int i = 0; i < retVal.length; i++) {
@@ -60,13 +72,27 @@ public class MStrings {
     public static String[] add(String[] a, String[] b) {
         String[] retVal = new String[a.length + b.length];
         int i = 0;
-        for(i = 0; i < a.length; i++) {
+        for (i = 0; i < a.length; i++) {
             retVal[i] = a[i];
         }
-        for(int j = 0; j < b.length; j++) {
+        for (int j = 0; j < b.length; j++) {
             retVal[j + i] = b[j];
         }
-        
+
         return retVal;
+    }
+
+    public static boolean isNumeric(String a) {
+        try {
+            Long.parseLong(a);
+            return true;
+        } catch (NumberFormatException nfe) {
+            try {
+                Integer.parseInt(a);
+                return true;
+            } catch (NumberFormatException nfe2) {
+                return false;
+            }
+        }
     }
 }
