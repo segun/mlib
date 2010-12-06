@@ -12,7 +12,7 @@ public class URLConstants {
     public static String platform = System.getProperty("microedition.platform");
     public static int isBB = platform.indexOf("BlackBerry");
     public static String getAPN(String network) {        
-        Echo.outln("ISBB: " + (isBB >= 0));
+        //Echo.outln("ISBB: " + (isBB >= 0));
         if (isBB < 0) {            
             return "";
         } else if (network.equals("Zain")) {
@@ -30,4 +30,5 @@ public class URLConstants {
             + "tunnelauthusername=web;tunnelauthpassword=web";
     public static String GLO_APN = USE_DEVICE_SIDE_STRING + ";apn=glowap;"
             + "tunnelauthusername=wap;tunnelauthpassword=wap";
+    public static final String ADS_URL = "http://www.statusforsale.net/MANUAL_EXECUTION/mobilead.php";
 }
