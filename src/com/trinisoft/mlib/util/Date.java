@@ -146,12 +146,17 @@ public class Date extends java.util.Date {
         int am_pm = calendar.get(Calendar.AM_PM);
         String am_pm_s = (am_pm == Calendar.AM) ? "AM" : "PM";
 
-        return "" + dd + "/" + mm + "/" + yy + "  " + h + ":" + m + "  " + am_pm_s;
+        return "" + dd + "/" + mm + "/" + yy + " " + h + ":" + m + "  " + am_pm_s;
     }
 
     public void fromString(String s) {
-        Vector dateTimePart = MStrings.splitString(s, "  ");
+        Vector dateTimePart = MStrings.splitString(s, " ");
         Vector datePart = MStrings.splitString(dateTimePart.elementAt(0).toString(), "/");
+        if(datePart.elementAt(0).toString().length() > 2) {
+            String temp = datePart.elementAt(0).toString();
+            datePart.setElementAt(datePart.elementAt(2), 0);
+            datePart.setElementAt(temp, 2);            
+        }
         Vector timePart = MStrings.splitString(dateTimePart.elementAt(1).toString(), ":");
         this.setDatePart(Integer.parseInt(datePart.elementAt(2).toString()),
                 Integer.parseInt(datePart.elementAt(1).toString()) - 1,
