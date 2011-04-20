@@ -44,6 +44,7 @@ public class HttpPull {
         }
         HttpConnection connection = (HttpConnection) Connector.open(url);
 
+        Echo.outln(url);
         connection.setRequestMethod(HttpConnection.GET);
         connection.setRequestProperty("User-Agent", userAgent);
         connection.setRequestProperty("api-key", APIKey);
