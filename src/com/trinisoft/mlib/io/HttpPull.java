@@ -8,6 +8,8 @@ import com.trinisoft.mlib.util.Echo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
 
@@ -18,8 +20,10 @@ import javax.microedition.io.HttpConnection;
 public class HttpPull {
     private String userAgent = "Profile/MIDP-2.1 Confirguration/CLDC-1.1";
     private String APIKey = "";
+    public Hashtable requestProperties;
 
     public HttpPull() {
+        requestProperties = new Hashtable();
     }
 
     public String getUserAgent() {

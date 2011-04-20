@@ -14,7 +14,7 @@ import javax.microedition.rms.RecordStoreException;
  *
  * @author segun
  */
-public abstract class StoreDecoratorAdapter extends BaseStore {
+public abstract class StoreDecoratorAdapter implements BaseStore {
 
     protected StoreDecoratorAdapter(BaseStore baseStore) {
     }

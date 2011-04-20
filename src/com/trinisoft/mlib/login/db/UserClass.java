@@ -18,7 +18,7 @@ import javax.microedition.rms.RecordStoreException;
  *
  * @author segun
  */
-public class UserClass extends BaseStore {
+public class UserClass implements BaseStore {
 
     String username;
     String password;

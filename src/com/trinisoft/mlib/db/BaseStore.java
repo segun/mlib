@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.trinisoft.mlib.db;
 
 import java.io.IOException;
@@ -11,12 +10,12 @@ import javax.microedition.rms.RecordStoreException;
 
 /**
  *
- * @author segun
+ * @author trinisoftinc
  */
-public abstract class BaseStore {
-    public abstract byte[] toByteArray() throws IOException;
-    public abstract boolean fromByteArray(byte[] data) throws IOException;
-    public abstract int save(RecordStore rs) throws RecordStoreException, IOException;
-    public abstract boolean delete(RecordStore rs, int recordID) throws RecordStoreException;
-    public abstract boolean update(RecordStore rs, byte[] newData, int recordID) throws RecordStoreException;
+public interface BaseStore {
+    public byte[] toByteArray() throws IOException;
+    public boolean fromByteArray(byte[] data) throws IOException;
+    public int save(RecordStore rs) throws RecordStoreException, IOException;
+    public boolean delete(RecordStore rs, int recordID) throws RecordStoreException;
+    public boolean update(RecordStore rs, byte[] newData, int recordID) throws RecordStoreException;    
 }
