@@ -15,6 +15,7 @@ import javax.microedition.rms.RecordStoreException;
  */
 public class BaseStoreImpl implements BaseStore {
 
+    
     public boolean delete(RecordStore rs, int recordID) throws RecordStoreException {
         return true;
     }

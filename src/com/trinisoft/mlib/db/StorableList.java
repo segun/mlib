@@ -4,6 +4,7 @@
  */
 package com.trinisoft.mlib.db;
 
+import com.trinisoft.mlib.util.Echo;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -21,15 +22,14 @@ import javax.microedition.rms.RecordStoreException;
 public class StorableList extends Vector implements BaseStore {
         
     public StorableList() {
-        super();
+        super();        
     }
 
     public void addElement(Object o) {
         if(o instanceof byte[]) {
-            super.addElement(o);
-            
+            super.addElement(o);            
         } else {
-            throw new IllegalArgumentException("Please convert " + o + " bytes before adding it to Storable List");
+            throw new IllegalArgumentException("Please convert " + o + " to bytes before adding it to Storable List");
         }
     }
         
@@ -64,10 +64,13 @@ public class StorableList extends Vector implements BaseStore {
         dos.writeInt(this.size());
         Enumeration enu = this.elements();
         while(enu.hasMoreElements()) {            
-            dos.writeUTF(new String((byte[]) enu.nextElement()));
+            String d =  new String((byte[])enu.nextElement());
+            Echo.outln("StorableList:69 - " + d);
+            dos.writeUTF(d);
         }
         dos.flush();
         data = baos.toByteArray();
+        Echo.outln(new String(data));
         return data;
     }
 
