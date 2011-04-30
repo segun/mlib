@@ -8,7 +8,7 @@ package com.trinisoft.mlib.util;
  *
  * @author trinisoftinc
  */
-public class URLConstants {
+public class URLConstants extends com.trinisoft.baselib.util.URLConstants {
     public static String platform = System.getProperty("microedition.platform");
 
     public static String getConnectionParams() {
@@ -18,6 +18,4 @@ public class URLConstants {
     public static String getAPN(String not_used) {
         return "";
     }
-
-    public static final String ADS_URL = "http://www.statusforsale.net/MANUAL_EXECUTION/mobilead.php";
 }
