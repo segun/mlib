@@ -41,7 +41,9 @@ public class BaseForm extends Form {
         messageDialog = new BaseDialog("MESSAGE");
         messageDialog.getStyle().setBorder(Border.createLineBorder(5, 0x00faaf));
         messageDialog.addComponent(new Button(new Command(message)));
-        messageDialog.addCommand(new Command("OK"));
+        Command okCommand = new Command("OK");
+        messageDialog.setBackCommand(okCommand);
+        messageDialog.addCommand(okCommand);                
         messageDialog.addCommandListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent ae) {
@@ -59,7 +61,9 @@ public class BaseForm extends Form {
         errorDialog = new BaseDialog("ERROR");
         errorDialog.getStyle().setBorder(Border.createLineBorder(5, 0xff0000));
         errorDialog.addComponent(new Button(new Command(error)));
-        errorDialog.addCommand(new Command("OK"));
+        Command okCommand = new Command("OK");
+        errorDialog.setBackCommand(okCommand);
+        errorDialog.addCommand(okCommand);
         errorDialog.addCommandListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent ae) {
