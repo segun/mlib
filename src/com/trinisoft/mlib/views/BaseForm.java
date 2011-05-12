@@ -28,14 +28,13 @@ public class BaseForm extends Form {
     //BaseDialog errorDialog, loginDialog, messageDialog;    
     Image advertImage;
     boolean isRunning = false;
-    public CommonTransitions in, out;
+    public CommonTransitions in;
 
     public BaseForm(MIDlet midlet) {
         super("");
         setLayout(new GridLayout(10, 1));
         this.midlet = midlet;
         in = CommonTransitions.createFade(500);
-        out = CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, true, 500);
         setTransitionInAnimator(in);
     }
 
