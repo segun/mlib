@@ -6,6 +6,7 @@ package com.trinisoft.mlib.views;
 
 import com.sun.lwuit.Button;
 import com.sun.lwuit.Command;
+import com.sun.lwuit.Component;
 import com.sun.lwuit.Dialog;
 import com.sun.lwuit.Form;
 import com.sun.lwuit.Image;
@@ -49,7 +50,7 @@ public class BaseForm extends Form {
 //        return messageDialog;
     }
 
-    protected void addLabel(String label) {
+    public void addLabel(String label) {
         addComponent(new Label(label));
     }    
     
@@ -61,7 +62,7 @@ public class BaseForm extends Form {
         TextArea text = new TextArea(pleaseWaitText);
         text.setEditable(false);
         Label l = new Label();
-        l.setIcon(r.getImage(loadingID));
+        //l.setIcon(r.getImage(loadingID));
         l.setAlignment(Label.CENTER);
         d.addComponent(text);
         d.addComponent(l);
@@ -76,5 +77,10 @@ public class BaseForm extends Form {
         });
         d.showModeless();
         return d;
+    }
+    
+    public void addWithLabel(String labelString, Component component) {
+        addLabel(labelString);
+        addComponent(component);
     }
 }
