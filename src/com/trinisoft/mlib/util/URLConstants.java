@@ -1,10 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
  */
 package com.trinisoft.mlib.util;
 
 import com.trinisoft.baselib.io.HttpPull;
+import javax.microedition.io.ConnectionNotFoundException;
+import javax.microedition.midlet.MIDlet;
 import javax.microedition.rms.RecordStore;
 
 /**
@@ -12,8 +14,8 @@ import javax.microedition.rms.RecordStore;
  * @author trinisoftinc
  */
 public class URLConstants extends com.trinisoft.baselib.util.URLConstants {
-    
-    public static final String BASE_NEW_VERSION_URL = BASE_URL + "version.php?action=GET_VERSION_URL&model=NONE";    
+
+    public static final String BASE_NEW_VERSION_URL = BASE_URL + "version.php?action=GET_VERSION_URL&model=NONE";
     public static String platform = System.getProperty("microedition.platform");
 
     public static String getConnectionParams() {
@@ -23,8 +25,16 @@ public class URLConstants extends com.trinisoft.baselib.util.URLConstants {
     public static String getAPN(String not_used) {
         return "";
     }
-    
-    public static void doFirstTime(final String name) throws Exception {
+
+    public static void callURL(String url, MIDlet midlet) {        
+        try {
+            midlet.platformRequest(url);
+        } catch (ConnectionNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void installNotify(final String name) throws Exception {
         final RecordStore rs = RecordStore.openRecordStore("FTRS", true);
         if (rs.getNumRecords() > 0) {
         } else {
@@ -33,7 +43,7 @@ public class URLConstants extends com.trinisoft.baselib.util.URLConstants {
                 public void run() {
                     HttpPull pull = new HttpPull();
                     try {
-                        pull.get("http://nerdlines.com/auto/install_notify.php?product_name=" + name + "&action=1", getAPN(""));
+                        pull.get(BASE_URL + "install_notify.php?product_name=" + name + "&action=1", getAPN(""));
                         byte[] data = "true".getBytes();
                         rs.addRecord(data, 0, data.length);
                     } catch (Exception ex) {
