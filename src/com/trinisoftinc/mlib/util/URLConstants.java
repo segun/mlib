@@ -28,4 +28,10 @@ public class URLConstants {
     public static String getAPN(String not_used) {
         return "";
     }
+    
+    public static void callURL(final String url, final MIDlet parent) throws Exception {
+        String furl = MStrings.replaceAll(url, "\"", "");
+        System.out.println(furl);
+        parent.platformRequest(furl);
+    }
 }
